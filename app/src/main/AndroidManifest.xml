@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.app.androidkt.ble">
+    package="com.app.androidkt.batterydetector">
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
@@ -22,11 +22,11 @@
         android:theme="@style/AppTheme">
 
         <service
-            android:name="com.app.androidkt.ble.BluetoothLEService"
+            android:name="com.app.androidkt.batterydetector.BluetoothLEService"
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name="com.app.androidkt.ble.BatteryDetectorActivity">
+        <activity android:name="com.app.androidkt.batterydetector.BatteryDetectorActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

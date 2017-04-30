@@ -1,4 +1,4 @@
-package com.app.androidkt.ble;
+package com.app.androidkt.batterydetector;
 
 import org.junit.Test;
 
