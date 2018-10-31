@@ -1,4 +1,6 @@
-package com.app.androidkt.batterydetector;
+package com.example.toine.bluetoothremote;
+
+/*https://github.com/Thumar/BatteryMonitor*/
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -34,43 +36,29 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
-public class BatteryDetectorActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
-    @BindView(R.id.startScan)
-    Button button;
-    @BindView(R.id.connectDevice)
+    /* GUI element */
+    Button startScan;
     Button connectDevice;
-
-    @BindView(R.id.deviceState)
+    Button connectService;
     TextView deviceStatus;
-    @BindView(R.id.batteryLevel)
-    TextView batteryLevel;
-
-    @BindView(R.id.deviceAddress)
     TextView deviceAddress;
-    @BindView(R.id.deviceName)
     TextView deviceName;
-    @BindView(R.id.serviceName)
     TextView serviceName;
+    TextView charValue;
 
-    @BindView(R.id.progressBar)
-    ProgressBar progressBar;
-    BluetoothDevice bluetoothDevice;
+
+    /* Bluetooth element*/
     private boolean mScanning;
+    BluetoothDevice bluetoothDevice;
     private BluetoothLeScanner bluetoothLeScanner;
     private BluetoothAdapter mBluetoothAdapter;
-
-    @BindView(R.id.connectService)
-    Button connectService;
-
     private BluetoothGattCharacteristic mNotifyCharacteristic;
     private boolean mConnected = false;
-
     private BluetoothLEService mBluetoothLEService;
     private final ServiceConnection mServiceConnection = new ServiceConnection() {
         @Override
@@ -88,7 +76,6 @@ public class BatteryDetectorActivity extends AppCompatActivity {
             mBluetoothLEService = null;
         }
     };
-
 
     // Handles various events fired by the Service.
     // ACTION_GATT_CONNECTED: connected to a GATT server.
@@ -123,7 +110,7 @@ public class BatteryDetectorActivity extends AppCompatActivity {
             bluetoothDevice = result.getDevice();
             deviceAddress.setText(bluetoothDevice.getAddress());
             deviceName.setText(bluetoothDevice.getName());
-            progressBar.setVisibility(View.INVISIBLE);
+            //progressBar.setVisibility(View.INVISIBLE);
         }
 
         @Override
@@ -135,7 +122,7 @@ public class BatteryDetectorActivity extends AppCompatActivity {
         public void onScanFailed(int errorCode) {
             super.onScanFailed(errorCode);
             Log.d(TAG, "Scanning Failed " + errorCode);
-            progressBar.setVisibility(View.INVISIBLE);
+            //progressBar.setVisibility(View.INVISIBLE);
         }
     };
 
@@ -151,43 +138,11 @@ public class BatteryDetectorActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_battery_detector);
-        ButterKnife.bind(this);
+        setContentView(R.layout.activity_main);
 
-        mBluetoothAdapter = BluetoothUtils.getBluetoothAdapter(BatteryDetectorActivity.this);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                progressBar.setVisibility(View.VISIBLE);
-                startScanning(true);
-            }
-        });
+        setupView();
+        setupOnClickListener();
 
-        connectDevice.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (bluetoothDevice != null) {
-                    progressBar.setVisibility(View.VISIBLE);
-                    Intent gattServiceIntent = new Intent(BatteryDetectorActivity.this, BluetoothLEService.class);
-                    bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
-                }
-            }
-        });
-
-        connectService.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mNotifyCharacteristic != null) {
-                    final int charaProp = mNotifyCharacteristic.getProperties();
-                    if ((charaProp | BluetoothGattCharacteristic.PROPERTY_READ) > 0) {
-                        mBluetoothLEService.readCharacteristic(mNotifyCharacteristic);
-                    }
-                    if ((charaProp | BluetoothGattCharacteristic.PROPERTY_NOTIFY) > 0) {
-                        mBluetoothLEService.setCharacteristicNotification(mNotifyCharacteristic, true);
-                    }
-                }
-            }
-        });
     }
 
     @Override
@@ -237,6 +192,57 @@ public class BatteryDetectorActivity extends AppCompatActivity {
         }
     }
 
+    private void setupView()
+    {
+        startScan=findViewById(R.id.startScan);
+        connectDevice=findViewById(R.id.connectDevice);
+        connectService=findViewById(R.id.connectService);
+        deviceStatus=findViewById(R.id.deviceStatus);
+        deviceAddress=findViewById(R.id.deviceAddress);
+        deviceName=findViewById(R.id.deviceName);
+        serviceName=findViewById(R.id.serviceName);
+        charValue=findViewById(R.id.charValue);
+    }
+
+
+    private void setupOnClickListener()
+    {
+
+        mBluetoothAdapter = BluetoothUtils.getBluetoothAdapter(MainActivity.this);
+        startScan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //progressBar.setVisibility(View.VISIBLE);
+                startScanning(true);
+            }
+        });
+
+        connectDevice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (bluetoothDevice != null) {
+                    //progressBar.setVisibility(View.VISIBLE);
+                    Intent gattServiceIntent = new Intent(MainActivity.this, BluetoothLEService.class);
+                    bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
+                }
+            }
+        });
+
+        connectService.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mNotifyCharacteristic != null) {
+                    final int charaProp = mNotifyCharacteristic.getProperties();
+                    if ((charaProp | BluetoothGattCharacteristic.PROPERTY_READ) > 0) {
+                        mBluetoothLEService.readCharacteristic(mNotifyCharacteristic);
+                    }
+                    if ((charaProp | BluetoothGattCharacteristic.PROPERTY_NOTIFY) > 0) {
+                        mBluetoothLEService.setCharacteristicNotification(mNotifyCharacteristic, true);
+                    }
+                }
+            }
+        });
+    }
 
     private void startScanning(final boolean enable) {
         bluetoothLeScanner = mBluetoothAdapter.getBluetoothLeScanner();
@@ -250,10 +256,11 @@ public class BatteryDetectorActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     mScanning = false;
-                    progressBar.setVisibility(View.INVISIBLE);
+                    //progressBar.setVisibility(View.INVISIBLE);
                     bluetoothLeScanner.stopScan(scanCallback);
                 }
             }, Constants.SCAN_PERIOD);
+
             mScanning = true;
             bluetoothLeScanner.startScan(scanFilters, settings, scanCallback);
         } else {
@@ -261,7 +268,6 @@ public class BatteryDetectorActivity extends AppCompatActivity {
             bluetoothLeScanner.stopScan(scanCallback);
         }
     }
-
 
     private void updateConnectionState(final String status) {
         runOnUiThread(new Runnable() {
@@ -274,7 +280,7 @@ public class BatteryDetectorActivity extends AppCompatActivity {
 
     private void displayData(String data) {
         if (data != null) {
-            batteryLevel.setText(data);
+            charValue.setText(data);
         }
     }
 
@@ -308,4 +314,9 @@ public class BatteryDetectorActivity extends AppCompatActivity {
             }
         }
     }
+
 }
+
+
+
+

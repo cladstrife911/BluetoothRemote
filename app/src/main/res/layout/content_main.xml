@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".MainActivity"
+    tools:showIn="@layout/activity_main">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/startScan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Start Scan"
+            />
+        <Button
+            android:id="@+id/connectDevice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Connect Device"
+            />
+        <Button
+            android:id="@+id/connectService"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Connect Service"
+            />
+
+        <TextView
+            android:id="@+id/textView_log"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hello World!" />
+        <TextView
+            android:id="@+id/deviceStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="**deviceStatus**" />
+        <TextView
+            android:id="@+id/charValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="**charValue**" />
+        <TextView
+            android:id="@+id/deviceAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="**00:00:00:00:00:00**"/>
+        <TextView
+            android:id="@+id/deviceName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="**deviceName**"/>
+        <TextView
+            android:id="@+id/serviceName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="**serviceName**" />
+
+    </LinearLayout>
+
+
+
+
+</android.support.constraint.ConstraintLayout>

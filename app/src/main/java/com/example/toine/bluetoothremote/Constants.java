@@ -1,4 +1,4 @@
-package com.app.androidkt.batterydetector;
+package com.example.toine.bluetoothremote;
 
 /**
  * Created by brijesh on 14/4/17.

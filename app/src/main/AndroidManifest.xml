@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.app.androidkt.batterydetector">
+    package="com.example.toine.bluetoothremote">
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
@@ -22,11 +22,14 @@
         android:theme="@style/AppTheme">
 
         <service
-            android:name="com.app.androidkt.batterydetector.BluetoothLEService"
+            android:name="com.example.toine.bluetoothremote"
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name="com.app.androidkt.batterydetector.BatteryDetectorActivity">
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

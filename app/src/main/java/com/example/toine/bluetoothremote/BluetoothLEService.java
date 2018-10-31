@@ -1,4 +1,5 @@
-package com.app.androidkt.batterydetector;
+package com.example.toine.bluetoothremote;
+
 
 import android.app.Service;
 import android.bluetooth.BluetoothAdapter;

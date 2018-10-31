@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">Battery Level Detector</string>
+    <string name="app_name">BluetoothRemote</string>
+    <string name="action_settings">Settings</string>
 </resources>
